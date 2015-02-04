@@ -9,11 +9,21 @@ def mean(data):
         print "The data is empty!"
         return
 
-def std(data, sample=True):
-# standard variation
+def var(data, sample=True):
+# standard deviation
     average = mean(data)
+    ss = sum((x-average)**2 for x in data)
     try:
-        return sqrt(sum((x-average)**2 for x in data)/((len(data)) - 1))
+        if sample:
+        # sample deviation
+            return ss/(len(data) - 1)
+        else:
+        # population deviation
+            return ss/len(data)
+
     except ZeroDivisionError:
         print "The data is empty!"
         return
+
+def std(data, sample=True):
+    return sqrt(var(data, sample))
