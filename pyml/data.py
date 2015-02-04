@@ -2,6 +2,7 @@ from helpers import *
 from helpers.exceptions import *
 
 class Vector:
+# {{{ Vector Class
     def __init__(self, vector=[]):
         self.vector = vector
         self.dimension = len(vector)
@@ -10,7 +11,7 @@ class Vector:
         try:
             if len(anotherVector) != len(self):
                 raise DimensionError(self, anotherVector)
-                return sum([self[i]*anotherVector[i] for i in range(self.dimension)])
+            return sum([self[i]*anotherVector[i] for i in range(self.dimension)])
         except DimensionError as e:
             print e.msg
 
@@ -64,7 +65,10 @@ class Vector:
             print e.msg
 
     def __getitem__(self, index):
-        return self.vector[index]
+        try:
+            return self.vector[index]
+        except IndexError as e:
+            print e
 
     def __eq__(self, anotherVector):
         for index in range(self.dimension):
@@ -73,18 +77,32 @@ class Vector:
         return True
 
     def __getslice__(self, i, j):
-        return self.vector[i:j]
+        try:
+            return tuple(self.vector[i:j])
+        except IndexError as e:
+            print e
 
     def __len__(self):
         return self.dimension
 
+    def __str__(self):
+        return "Vector({})".format(",".join(str(element) for element in self.vector))
+
+    def __repr__(self):
+        return "Vector({})".format(",".join(str(element) for element in self.vector))
+
     def getDimension(self):
         return self.dimension
 
-
-
+# }}}
 
 #TODO
+class Matrix(Vector):
+# {{{ Matrix Class
+    def __init__(self, data):
+        self.matrix = None
+# }}}
+
 '''
 class Feature:
     def __init__(self, data):
