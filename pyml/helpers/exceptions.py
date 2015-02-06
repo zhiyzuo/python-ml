@@ -1,6 +1,6 @@
-class DimensionError(Exception):
-    def __init__(self, object1, object2):
-        self.msg = "Dimension of {} and {} mismatch!".format(object1, object2)
+class EmptyError(Exception):
+    msg = "Given input is empty!"
     def __str__(self):
-        return repr(self.msg)
-        
+        return EmptyError.msg
+    def __repr__(self):
+        return EmptyError.msg
