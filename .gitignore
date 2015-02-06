@@ -1,4 +1,8 @@
 *.pyc
 *.swp
+*.swo
+*.~
+*.temp
 *.log
 test.py
+_test.py
