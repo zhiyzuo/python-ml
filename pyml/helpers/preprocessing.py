@@ -2,7 +2,7 @@ from operations import *
 import numpy as np
 
 def normalize(matrix, columns, method="linear"):
-# input should be a numpy matrix
+# {{{ input should be a numpy matrix
     normalized_matrix = np.matrix([[] for i in range(matrix.shape[1]+1)])
     if method == "linear":
         for col in range(matrix.shape[1]):
@@ -33,3 +33,15 @@ def normalize(matrix, columns, method="linear"):
     '''
 
     return normalized_matrix
+# }}}
+
+def discretize(matrix, columns, bins):
+    discretized_matrix = np.matrix([[] for i in range(matrix.shape[1]+1)])
+    for col in range(matrix.shape[1]):
+        if col in columns:
+            bin_ = bins[i]
+        else:
+
+
+
+
