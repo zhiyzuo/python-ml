@@ -1,20 +1,21 @@
 from operations import *
 import numpy as np
+import math
 
 def normalize(matrix, columns, method="linear"):
 # {{{ input should be a numpy matrix
-    normalized_matrix = np.matrix([[] for i in range(matrix.shape[1]+1)])
+    normalized_matrix = np.matrix([[] for i in range(matrix.shape[0])])
     if method == "linear":
         for col in range(matrix.shape[1]):
+            vector = matrix[:, col][:]
             if col in columns:
-                vector = matrix[:, col][:]
                 minVal = float(min(vector))
                 scale = - minVal + max(vector).item()
                 try:
-                    normalized_matrix = np.concatenate((normalized_matrix, np.array([[(vector[i, 0] - minVal)/scale] for i in range(vector.shape[0])])), axis=1)
+                    normalized_vector = np.array([[(vector[i, 0] - minVal)/scale] for i in range(vector.shape[0])])
+                    normalized_matrix = np.concatenate((normalized_matrix, normalized_vector), axis=1)
                 except ZeroDivisionError:
                     print "Maximum and minimun are the same value!"
-                    continue
             else:
                 normalized_matrix = np.concatenate((normalized_matrix, vector), axis=1)
 
@@ -36,12 +37,15 @@ def normalize(matrix, columns, method="linear"):
 # }}}
 
 def discretize(matrix, columns, bins):
-    discretized_matrix = np.matrix([[] for i in range(matrix.shape[1]+1)])
+    discretized_matrix = np.matrix([[] for i in range(matrix.shape[0])])
     for col in range(matrix.shape[1]):
+        vector = matrix[:, col][:]
         if col in columns:
-            bin_ = bins[i]
+            bin_ = int(math.ceil(bins[col]))
+            bins_ = np.linspace(vector.min(), vector.max(), bin_)
+            discretized_vector = np.digitize(np.transpose(np.asarray(vector))[0], bins_)
+            discretized_vector = np.transpose(np.asmatrix(discretized_vector))
+            discretized_matrix = np.concatenate((discretized_matrix, discretized_vector), axis=1)
         else:
-
-
-
-
+            discretized_matrix = np.concatenate((discretized_matrix, vector), axis=1)
+    return discretized_matrix
