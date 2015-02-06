@@ -3,13 +3,13 @@ import numpy as np
 
 def normalize(matrix, columns, method="linear"):
 # input should be a numpy matrix
-    normalized_matrix = np.matrix([[] for i in range(matrix.shape[1])])
+    normalized_matrix = np.matrix([[] for i in range(matrix.shape[1]+1)])
     if method == "linear":
         for col in range(matrix.shape[1]):
             if col in columns:
                 vector = matrix[:, col][:]
                 minVal = float(min(vector))
-                scale = - minVal + max(vector)
+                scale = - minVal + max(vector).item()
                 try:
                     normalized_matrix = np.concatenate((normalized_matrix, np.array([[(vector[i, 0] - minVal)/scale] for i in range(vector.shape[0])])), axis=1)
                 except ZeroDivisionError:
