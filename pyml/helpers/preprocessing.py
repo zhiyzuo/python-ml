@@ -3,7 +3,7 @@ import numpy as np
 import math
 
 def normalize(matrix, columns, method="linear"):
-# {{{ input should be a numpy matrix
+# {{{ normalize
     normalized_matrix = np.matrix([[] for i in range(matrix.shape[0])])
     if method == "linear":
         for col in range(matrix.shape[1]):
@@ -13,11 +13,11 @@ def normalize(matrix, columns, method="linear"):
                 scale = - minVal + max(vector).item()
                 try:
                     normalized_vector = np.array([[(vector[i, 0] - minVal)/scale] for i in range(vector.shape[0])])
-                    normalized_matrix = np.concatenate((normalized_matrix, normalized_vector), axis=1)
+                    np.column_stack((normalized_matrix, normalized_vector), axis=1)
                 except ZeroDivisionError:
                     print "Maximum and minimun are the same value!"
             else:
-                normalized_matrix = np.concatenate((normalized_matrix, vector), axis=1)
+                np.column_stack((normalized_matrix, vector), axis=1)
 
     '''
         #TODO: feels not right
@@ -37,6 +37,7 @@ def normalize(matrix, columns, method="linear"):
 # }}}
 
 def discretize(matrix, columns, bins):
+# {{{ discretize
     discretized_matrix = np.matrix([[] for i in range(matrix.shape[0])])
     for col in range(matrix.shape[1]):
         vector = matrix[:, col][:]
@@ -44,8 +45,8 @@ def discretize(matrix, columns, bins):
             bin_ = int(math.ceil(bins[col]))
             bins_ = np.linspace(vector.min(), vector.max(), bin_)
             discretized_vector = np.digitize(np.transpose(np.asarray(vector))[0], bins_)
-            discretized_vector = np.transpose(np.asmatrix(discretized_vector))
-            discretized_matrix = np.concatenate((discretized_matrix, discretized_vector), axis=1)
+            np.column_stack((discretized_matrix, discretized_vector))
         else:
-            discretized_matrix = np.concatenate((discretized_matrix, vector), axis=1)
+            np.column_stack((discretized_matrix, vector))
     return discretized_matrix
+# }}}
