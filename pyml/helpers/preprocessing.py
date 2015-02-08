@@ -13,11 +13,11 @@ def normalize(matrix, columns, method="linear"):
                 scale = - minVal + max(vector).item()
                 try:
                     normalized_vector = np.array([[(vector[i, 0] - minVal)/scale] for i in range(vector.shape[0])])
-                    np.column_stack((normalized_matrix, normalized_vector), axis=1)
+                    normalized_matrix = np.column_stack((normalized_matrix, normalized_vector))
                 except ZeroDivisionError:
                     print "Maximum and minimun are the same value!"
             else:
-                np.column_stack((normalized_matrix, vector), axis=1)
+               normalized_matrix = np.column_stack((normalized_matrix, vector))
 
     '''
         #TODO: feels not right
@@ -45,8 +45,8 @@ def discretize(matrix, columns, bins):
             bin_ = int(math.ceil(bins[col]))
             bins_ = np.linspace(vector.min(), vector.max(), bin_)
             discretized_vector = np.digitize(np.transpose(np.asarray(vector))[0], bins_)
-            np.column_stack((discretized_matrix, discretized_vector))
+            discretized_matrix = np.column_stack((discretized_matrix, discretized_vector))
         else:
-            np.column_stack((discretized_matrix, vector))
+            discretized_matrix = np.column_stack((discretized_matrix, vector))
     return discretized_matrix
 # }}}
