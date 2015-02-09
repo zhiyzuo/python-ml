@@ -1,4 +1,4 @@
 __all__ = [ # subpackages
-            'helpers', 
+            'utils', 
             # .py files
             'data', 'distributions']
