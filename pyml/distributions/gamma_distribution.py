@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 import matplotlib.pyplot as plt
-import math
 import random
 
 def Gamma(n=1000, alpha=1, beta=1, plot=False):
@@ -14,7 +14,7 @@ def Gamma(n=1000, alpha=1, beta=1, plot=False):
         samples.append(sample)
 
     if plot:
-        plt.hist(samples, bins=math.sqrt(n))
+        plt.hist(samples, bins=np.sqrt(n))
         plt.title("Gamma Histogram")
         plt.xlabel("Value")
         plt.ylabel("Frequency")

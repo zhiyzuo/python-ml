@@ -1,4 +1,4 @@
 __all__ = [ # subpackages
-            'utils', 
+            'utils', 'associations', 'clustering', 'distributions', 'graph', 'predictors', 
             # .py files
-            'data', 'distributions']
+            'data']

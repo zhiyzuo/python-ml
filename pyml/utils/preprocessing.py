@@ -1,6 +1,6 @@
+# -*- coding: utf-8 -*-
 from operations import *
 import numpy as np
-import math
 
 def normalize(matrix, columns, method="linear"):
 # {{{ normalize
@@ -42,7 +42,7 @@ def discretize(matrix, columns, bins):
     for col in range(matrix.shape[1]):
         vector = matrix[:, col][:]
         if col in columns:
-            bin_ = int(math.ceil(bins[col]))
+            bin_ = int(np.ceil(bins[col]))
             bins_ = np.linspace(vector.min(), vector.max(), bin_)
             discretized_vector = np.digitize(np.transpose(np.asarray(vector))[0], bins_)
             discretized_matrix = np.column_stack((discretized_matrix, discretized_vector))

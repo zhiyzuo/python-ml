@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class EmptyError(Exception):
     msg = "Given input is empty!"
     def __str__(self):
