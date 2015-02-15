@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
+from pyml.utils.exceptions import *
 
 def euclidean_distance(p1, p2, r=2):
 # {{{ Euclidean distance
@@ -11,9 +12,11 @@ def euclidean_distance(p1, p2, r=2):
 
     try:
         if (type(r) not in  (int, str)) or (type(p1) not in (np.ndarray, list, tuple)) or \
-                (type(p1) not in (np.ndarray, list, tuple)):
+                (type(p2) not in (np.ndarray, list, tuple)):
             raise TypeError("Input data invalid!")
         #TODO: raise possible errors
+        elif len(p1) != len(p2):
+            raise DimensionError
         else:
             #  L∞-Norm 
             if r == 'inf':
@@ -30,6 +33,6 @@ def euclidean_distance(p1, p2, r=2):
                     sumation += abs(p1i-p2i)**r
                 distance = float(sumation)**(1./r)
             return distance
-    except TypeError as e:
+    except:
         raise
 # }}}
