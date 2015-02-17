@@ -2,10 +2,10 @@
 import numpy as np
 from pyml.utils.exceptions import *
 
-def cosine_distance(v1,v2):
-# {{{ Cosine distance
+def hamming_distance(v1,v2):
+# {{{ Hamming distance
     ''' Input objects should be two vectors;
-        Compute cosine distance (angle) between v1 and v2;
+        Return the number of different elements in two vectors;
     '''
 
     try:
@@ -18,9 +18,11 @@ def cosine_distance(v1,v2):
         #TODO: raise possible errors
         else:
             v1, v2 = np.array(v1), np.array(v2)
-            den = np.sqrt(v1.dot(v1)) * np.sqrt(v2.dot(v2))
-            num = np.dot(v1, v2)
-            distance = (np.arccos(float(num)/den))*180/np.pi
+            distance = 0
+            for i in range(len(v1)):
+                e1, e2 = v1[i], v2[i]
+                if e1 != e2:
+                    distance += 1
             return distance
     except:
         raise

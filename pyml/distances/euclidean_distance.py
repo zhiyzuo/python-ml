@@ -17,6 +17,8 @@ def euclidean_distance(p1, p2, r=2):
         #TODO: raise possible errors
         elif len(p1) != len(p2):
             raise DimensionError
+        elif len(p1) == 0:
+            raise EmptyError
         else:
             #  L∞-Norm 
             if r == 'inf':
