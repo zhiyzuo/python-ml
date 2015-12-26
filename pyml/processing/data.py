@@ -1,95 +1,35 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 
-class Feature:
+class Data(object):
 # {{{ Feature Class
-    def __init__(self, data, header=np.array([])):
+    def __init__(self, data, target):
     # data should be in the form of list or numpy matrix
-        try:
-            if len(data) < 1:
-                raise EmptyError
 
-            self.feature_space = np.asmatrix(data)
-            self.dimension = len(data[0])
-            self.size = len(data)
+        self.data = np.asmatrix(data)
+        self.target = np.asarray(target)
+        self.dimension = self.data.shape
 
-            if len(header) < 1:
-                self.header = np.array(["x{}".format(i) for i in range(self.dimension)])
-            else:
-                self.header = np.asarray(header)
+    def get_data(self):
+        return np.copy(self.data)
 
-        except EmptyError as e:
-            raise
+    def get_target(self):
+        return np.copy(self.target)
+    
+    def update_data(self, new_data):
+        self.data = np.asmatrix(new_data)
 
-    def get_header(self):
-        return tuple(self.header[:])
+    def update_target(self, new_target):
+        self.target = np.asarray(new_target)
 
     def get_dimension(self):
         return self.dimension
+    
+    def __repr__(self):
+        return 'pyml.Data object'
 
-    def get_feature_space(self):
-        return self.feature_space[:]
+    def __str__(self):
+        return 'pyml.Data object: shape (%d, %d)' %(self.dimension[0], self.dimension[1])
 
-    def get_normalized(self, columns, method="linear"):
-    # return a new Feature object that is normalized
-        return Feature(normalize(self.feature_space, columns, method))
-
-    def get_discretized(self, columns, bins=None):
-    # return a new Feature object whose specified columns are discretized
-        if bins == None:
-            bins = [math.sqrt(self.size) for col in columns]
-        return Feature(discretize(self.feature_space, columns, bins))
 # }}}
 
-class Target:
-# {{{ Target Class
-    def __init__(self, targets, header=np.array([])):
-    # target should be a column
-        try:
-            if len(targets) < 1:
-                raise EmptyError
-
-            self.targets = np.asmatrix(targets)
-            self.size = self.targets[0].size
-            self.dimension = self.targets.shape[0]
-
-            if len(header) < 1:
-                self.header = np.array(["target" for i in range(self.dimension)])
-            elif len(header) != self.dimension:
-                raise DimensionError
-            elif type(header) in [list, np.ndarray]:
-                self.header = np.asarray(header)
-            else:
-                self.header = np.asarray([header])
-
-        except EmptyError:
-            raise
-
-        except DimensionError:
-            raise
-
-
-    def get_header(self):
-        return self.header[:]
-
-    def get(self, columns=None):
-        try:
-            if columns == None:
-                return self.targets[:]
-            elif type(columns) == int:
-                return self.targets[:, columns]
-            elif type(columns) == np.ndarray or type(columns) == list:
-                return np.column_stack(self.targets[:, col] for col in columns)
-            else:
-                raise TypeError
-        except TypeError:
-            print "Please either enter an integer or array for specified columns of this Target object!"
-
-    def get_discretized(self, columns, bins=None):
-    # return a new Target object whose specified columns are discretized
-        if bins == None:
-            bins = [math.sqrt(self.size) for i in range(self.size)]
-        elif type(bins) == int:
-            bins = [bins for i in range(self.size)]
-        return Target(discretize(self.targets, columns, bins), self.header)
-# }}}
