@@ -5,8 +5,8 @@ from pyml.dataset import tic_tac_toe, tennis
 from pyml.supervised.naive_bayes import NaiveBayes
 
 x, y = tennis.load()
-#x, y = data[:1000, :-1], data[:1000, -1].flatten()
 
+#nb = NaiveBayes((100,0.1))
 nb = NaiveBayes()
 
 nb.fit(x[:13], y[:13])

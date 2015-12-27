@@ -5,7 +5,8 @@ class NaiveBayes(object):
     '''
 
     def __init__(self, correction=(0,0)):
-        # TODO: add correction
+        # 1st: m, equivalent sample size
+        # 2nd: p, prior
         self.correction = correction
 
     def fit(self, x, y):
@@ -33,8 +34,8 @@ class NaiveBayes(object):
             c0_info.append(dict.fromkeys(_unique_j))
             c1_info.append(dict.fromkeys(_unique_j))
             for _item in _unique_j:
-                c0_info[-1][_item] = (x0j == _item).sum()/float(_n_0)
-                c1_info[-1][_item] = (x1j == _item).sum()/float(_n_1)
+                c0_info[-1][_item] = ((x0j == _item).sum() + self.correction[1])/float(_n_0 + self.correction[0])
+                c1_info[-1][_item] = ((x1j == _item).sum() + self.correction[1])/float(_n_1 + self.correction[0])
 
         self.c0_info = np.array(c0_info)
         self.c1_info = np.array(c1_info)
@@ -47,6 +48,7 @@ class NaiveBayes(object):
             # use log
             pc1 = np.log(self.c1) + sum([np.log(self.c1_info[j][x_[j]]) for j in range(self._dim)])
             pc0 = np.log(self.c0) + sum([np.log(self.c0_info[j][x_[j]]) for j in range(self._dim)])
+            print np.exp(pc1), np.exp(pc0)
             if pc1 > pc0:
                 predictions[i] = 1
         return predictions
