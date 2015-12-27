@@ -48,7 +48,6 @@ class NaiveBayes(object):
             # use log
             pc1 = np.log(self.c1) + sum([np.log(self.c1_info[j][x_[j]]) for j in range(self._dim)])
             pc0 = np.log(self.c0) + sum([np.log(self.c0_info[j][x_[j]]) for j in range(self._dim)])
-            print np.exp(pc1), np.exp(pc0)
             if pc1 > pc0:
                 predictions[i] = 1
         return predictions
