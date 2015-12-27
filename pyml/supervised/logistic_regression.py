@@ -33,7 +33,7 @@ class LogisticRegression(object):
 
         return _cost
 
-    def fit(self, x, y, alpha=0.01, beta=0.1, max_iter=1000, threshold=0.02):
+    def fit(self, x, y, alpha=0.01, beta=0.1, max_iter=1000):
         '''
             alpha: learning rate
             beta: regularization rate
@@ -45,13 +45,12 @@ class LogisticRegression(object):
         x_ = np.hstack((np.ones((_n,1)), x))
         # initialize parameter theta
         self.theta = np.random.rand(_dim+1, 1)
-        iter_, epsilon = 0, 100
-        while iter_ < max_iter or epsilon > threshold:
+        iter_ = 1
+        while iter_ < max_iter:
             temp = self.output(x_, False)-y.reshape(_n, 1)
             self.theta = (1 - alpha*beta)*self.theta - alpha*(np.dot(x_.T, temp))
-            epsilon = self._cost_func(x_, y)
+            #epsilon = self._cost_func(x_, y)
             iter_ += 1
-            print iter_, epsilon
 
     def predict(self, x_new, threshold=0.5):
         '''
@@ -60,7 +59,7 @@ class LogisticRegression(object):
         prob = self.output(x_new)
         predictions = np.where(np.where(prob>threshold, prob, 0) <= 0,\
                 np.where(prob>threshold, prob, 0), 1)
-        print prob
+
         return predictions
 
     def get_param(self):
