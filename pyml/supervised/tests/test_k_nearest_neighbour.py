@@ -17,3 +17,5 @@ for tr, te in loo:
     y_pred = knn.predict(x_te)
     cm += confusion_matrix(y_te, y_pred)
 
+print cm
+
