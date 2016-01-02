@@ -1,5 +1,16 @@
 import numpy as np
 
+def mse(y_true, y_pred):
+    '''
+        For regression models
+    '''
+
+    y_true, y_pred = np.asarray(y_true), np.asarray(y_pred)
+    return ((y_true-y_pred)**2).sum()
+
+def rmse(y_true, y_pred):
+    return np.sqrt(mse(y_true, y_pred))
+
 def accuracy(y_true, y_pred):
     y_true, y_pred = np.asarray(y_true), np.asarray(y_pred)
     return sum(y_true == y_pred)/float(y_true.size)
