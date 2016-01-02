@@ -2,6 +2,7 @@ class ELM(object):
     '''
         Implementation of simple ELM
         Use Sigmoid function ONLY at this moment
+        ONLY regression for now
     '''
 
     def __init__(self, n=100):
@@ -22,7 +23,6 @@ class ELM(object):
         from scipy.special import expit
 
         H_test = expit(np.dot(self.a, unknown_data.T) + self.b)
-        output = np.dot(H_test.T, self.beta)
-        predictions = np.array([1 if item > threshold else 0 for item in output])
+        predictions = np.dot(H_test.T, self.beta)
         return predictions
 
